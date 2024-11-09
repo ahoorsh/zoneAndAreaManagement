@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fa" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>فهرست نواحی</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="header">
+    <h1>فهرست نواحی</h1>
+    <a href="/page/areas/get-all-areas" class="button">بازگشت</a>
+</div>
+<div class="container">
+
+    <table>
+        <thead>
+        <tr>
+            <th>نام ناحیه</th>
+            <th>کد ناحیه</th>
+            <th>کد منطقه</th>
+            <th>عملیات</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="zone : ${zones}">
+            <td th:text="${zone.name}"></td>
+            <td th:text="${zone.code}"></td>
+            <td th:text="${zone.area.code}"></td>
+            <td>
+                <a th:href="@{/page/zones/edit-zone(code=${zone.code})}" class="button edit-button">ویرایش</a>
+
+                <a href="#"
+                   class="button delete-button"
+                   th:attr="data-code=${zone.id}"
+                   style="background-color: red; color: white;"
+                   onclick="confirmDeleteZone(event, this)"
+                >حذف</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function confirmDeleteZone(event, element) {
+        event.preventDefault();
+        const zoneId = element.getAttribute('data-code');
+
+        if (confirm("آیا مطمئن هستید که میخواهید این ناحیه را حذف کنید؟")) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/zones/delete?zoneId=' + zoneId,
+                success: function (response) {
+                    alert(response);
+                    location.reload();
+                },
+                error: function (xhr) {
+                    console.log(xhr)
+                    alert("خطا در حذف ناحیه!");
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>

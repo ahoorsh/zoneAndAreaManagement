@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fa" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ویرایش ناحیه</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="header">
+    <h1>ویرایش ناحیه</h1>
+    <a href="/page/areas/get-all-areas" class="button">بازگشت</a>
+</div>
+<div class="container">
+    <form id="editZoneForm" th:action="@{/page/zones/edit}" th:object="${zoneDto}" method="post">
+        <input type="hidden" id="areaCode" name="areaCode" th:value="${areaCode}"/>
+
+        <div>
+            <label for="name">نام:</label>
+            <input type="text" id="name" th:field="*{name}" required/>
+        </div>
+        <div>
+            <label for="code">کد:</label>
+            <input type="text" id="code" th:field="*{code}" required readonly/> <!-- Code is read-only -->
+        </div>
+        <button type="button" id="saveChangesButton">ذخیره تغییرات</button>
+    </form>
+
+    <div id="responseMessage"></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#saveChangesButton').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: $('#editZoneForm').attr('action'),
+                data: $('#editZoneForm').serialize(),
+                success: function (response) {
+                    // Ensure response has a message property
+                    if (response.message) {
+                        $('#responseMessage').html('<div class="alert success">' + response.message + '</div>');
+                    } else {
+                        $('#responseMessage').html('<div class="alert error">Unknown error occurred!</div>');
+                    }
+                },
+                error: function (xhr) {
+                    $('#responseMessage').html('<div class="alert error">' + xhr.responseText + '</div>');
+                }
+            });
+        });
+    });
+
+</script>
+</body>
+</html>

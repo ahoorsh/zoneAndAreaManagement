@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fa" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>فهرست مناطق</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="header">
+    <h1 class="header-title">مدیریت مناطق و نواحی</h1>
+    <img src="/images/logo.png" alt="Logo" class="logo">
+</div>
+
+<div class="content">
+    <h2>فهرست مناطق</h2>
+    <div class="actions">
+        <a href="/create" class="button">اضافه کردن منطقه</a>
+    </div>
+    <ul>
+        <li th:each="area : ${areas}">
+            <span th:text="${area.name}">نام منطقه</span>
+            <div>
+                <a th:href="@{/edit/{id}(id=${area.id})}" class="button">ویرایش</a>
+                <form th:action="@{/delete/{id}(id=${area.id})}" method="post" style="display:inline;">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit" class="button">حذف</button>
+                </form>
+            </div>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

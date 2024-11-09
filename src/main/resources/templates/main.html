@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fa" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>مدیریت مناطق و نواحی</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="header">
+    <h1 class="header-title">مدیریت مناطق و نواحی</h1>
+    <img src="/images/logo.png" alt="Logo" class="logo">
+</div>
+
+<div class="content">
+    <h2>خوش آمدید به سامانه مدیریت مناطق و نواحی</h2>
+    <div class="clickable-field">
+        <a th:href="@{/page/areas/get-all-areas}" class="link">فهرست مناطق</a>
+        <a th:href="@{/page/areas/create-area}" class="link">اضافه کردن منطقه</a>
+    </div>
+</div>
+</body>
+</html>
